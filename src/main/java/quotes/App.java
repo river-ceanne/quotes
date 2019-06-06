@@ -19,7 +19,10 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-        ArrayList<String> jsonStrings = getQuotesData();
+
+        Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
+
+        ArrayList<String> jsonStrings = getQuotesData(path);
         ArrayList<Quote> myQuotes = quotify(jsonStrings);
 
         System.out.println(myQuotes.get((int)(Math.random() * myQuotes.size() + 1)));
@@ -40,9 +43,7 @@ public class App {
     }
 
 
-    public static ArrayList<String> getQuotesData() throws IOException {
-
-        Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
+    public static ArrayList<String> getQuotesData(Path path) throws IOException {
 
         BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
         String output = "";

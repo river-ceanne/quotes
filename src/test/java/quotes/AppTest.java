@@ -5,8 +5,30 @@ package quotes;
 
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static quotes.App.getQuotesData;
+
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
+
+    @Test
+    public void testQuoteConstructor() {
+
+        Quote quote = new Quote("Reina","says hello");
+        assertEquals("Reina",quote.getAuthor());
+        assertEquals("says hello",quote.getText());
+
+    }
+
+    @Test (expected = IOException.class)
+    public void testGetQuotesDataException() throws IOException {
+
+        Path path = FileSystems.getDefault().getPath("assets", "fakeFile.json");
+        ArrayList<String> x = getQuotesData(path);
 
     }
 }
