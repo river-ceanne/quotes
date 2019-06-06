@@ -4,11 +4,46 @@
 package quotes;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static quotes.App.getQuotesData;
 
 public class AppTest {
-    @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+
+    @Test
+    public void testQuoteConstructor() {
+
+        Quote quote = new Quote("Reina","says hello");
+        assertEquals("Reina",quote.getAuthor());
+        assertEquals("says hello",quote.getText());
+
+    }
+
+    @Test (expected = IOException.class)
+    public void testGetQuotesDataException() throws IOException {
+
+        Path path = FileSystems.getDefault().getPath("assets", "fakeFile.json");
+        ArrayList<String> x = getQuotesData(path);
+
+    }
+
+    @Test
+    public void testMainFunction() throws IOException {
+        String[] strings = null;
+        final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        App.main(strings);
+
+        assertTrue(outContent.toString().contains("Author") && outContent.toString().contains("Quote"));
+
     }
 }

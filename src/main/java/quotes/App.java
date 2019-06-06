@@ -3,16 +3,72 @@
  */
 package quotes;
 
-import java.io.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+
 public class App {
-    public String getGreeting() {
-        return "Hello world.";
+
+
+    public static void main(String[] args) throws IOException {
+
+
+        Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
+
+        ArrayList<String> jsonStrings = getQuotesData(path);
+        ArrayList<Quote> myQuotes = quotify(jsonStrings);
+
+        System.out.println(myQuotes.get((int)(Math.random() * myQuotes.size() + 1)));
+
+
     }
 
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+    public static ArrayList<Quote> quotify(ArrayList<String> quoteJSONString){
+        ArrayList<Quote>  quotes = new ArrayList<>();
+
+        for(String string: quoteJSONString){
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            Quote quoteFromJsonString = gson.fromJson(string, Quote.class );
+            quotes.add(quoteFromJsonString);
+        }
+
+        return quotes;
+    }
+
+
+    public static ArrayList<String> getQuotesData(Path path) throws IOException {
+
+        BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+        String output = "";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while((output = reader.readLine()) != null){
+            stringBuilder.append(output);
+        }
+
+        String[] objectArray = stringBuilder.toString().split("},",-1);
+        ArrayList<String> outputArray = new ArrayList<>();
+
+        for(String string: objectArray){
+            if(string.startsWith("[")){
+                string = string.substring(1);
+            }
+            if(string.endsWith("]")){
+                string = string.substring(1,string.length()-1);
+                outputArray.add(string);
+                continue;
+            }
+
+            outputArray.add(string+"}");
+        }
+
+        return outputArray;
     }
 }
