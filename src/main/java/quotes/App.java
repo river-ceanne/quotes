@@ -3,6 +3,10 @@
  */
 package quotes;
 
+import java.io.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class App {
     public String getGreeting() {
         return "Hello world.";
