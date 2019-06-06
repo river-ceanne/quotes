@@ -22,10 +22,7 @@ public class App {
         ArrayList<String> jsonStrings = getQuotesData();
         ArrayList<Quote> myQuotes = quotify(jsonStrings);
 
-
-        for(Quote quote: myQuotes){
-            System.out.println(quote);
-        }
+        System.out.println(myQuotes.get((int)(Math.random() * myQuotes.size() + 1)));
 
 
     }
@@ -34,7 +31,6 @@ public class App {
         ArrayList<Quote>  quotes = new ArrayList<>();
 
         for(String string: quoteJSONString){
-            System.out.println(string);
             Gson gson = new GsonBuilder().serializeNulls().create();
             Quote quoteFromJsonString = gson.fromJson(string, Quote.class );
             quotes.add(quoteFromJsonString);
@@ -47,7 +43,6 @@ public class App {
     public static ArrayList<String> getQuotesData() throws IOException {
 
         Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
-        System.out.println(path);
 
         BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
         String output = "";
@@ -55,7 +50,6 @@ public class App {
 
         while((output = reader.readLine()) != null){
             stringBuilder.append(output);
-//            System.out.println(output);
         }
 
         String[] objectArray = stringBuilder.toString().split("},",-1);
@@ -67,7 +61,6 @@ public class App {
             }
             if(string.endsWith("]")){
                 string = string.substring(1,string.length()-1);
-                System.out.println(string);
                 outputArray.add(string);
                 continue;
             }
