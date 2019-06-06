@@ -20,4 +20,4 @@ On your Java clone od this project, make sure you have the GSON dependecy implem
 Running the main method will display a random quote from a JSON file under assets folder. 
 
 ## Code
-[Source Files]("./src/main/java/quotes/App.java")
+[Source Files]("./src/")
