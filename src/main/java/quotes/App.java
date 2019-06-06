@@ -3,9 +3,6 @@
  */
 package quotes;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -19,18 +16,14 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-//        System.out.println(getQuotesData());
-        ArrayList<Quote> myQuotes = quotify(getQuotesData());
+        ArrayList<String> jsonStrings = getQuotesData();
+        ArrayList<Quote> myQuotes = quotify(jsonStrings);
 
 
         for(Quote quote: myQuotes){
             System.out.println(quote);
         }
 
-
-//
-//        Quote quotesFromJsonData = gson.fromJson( getQuotesData(), Quote.class );
-//        System.out.println(quoteCollection.toString());
 
     }
 
@@ -39,9 +32,9 @@ public class App {
 
         for(String string: quoteJSONString){
             System.out.println(string);
-            Gson gson = new GsonBuilder().serializeNulls().create();
-            Quote quoteFromJsonString = gson.fromJson(string, Quote.class );
-            quotes.add(quoteFromJsonString);
+//            Gson gson = new GsonBuilder().serializeNulls().create();
+//            Quote quoteFromJsonString = gson.fromJson(string, Quote.class );
+//            quotes.add(quoteFromJsonString);
         }
 
         return quotes;
@@ -68,6 +61,12 @@ public class App {
         for(String string: objectArray){
             if(string.startsWith("[")){
                 string = string.substring(1);
+            }
+            if(string.endsWith("]")){
+                string = string.substring(1,string.length()-1);
+                System.out.println(string);
+                outputArray.add(string);
+                continue;
             }
 
             outputArray.add(string+"}");
