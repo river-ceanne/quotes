@@ -3,6 +3,9 @@
  */
 package quotes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -32,9 +35,9 @@ public class App {
 
         for(String string: quoteJSONString){
             System.out.println(string);
-//            Gson gson = new GsonBuilder().serializeNulls().create();
-//            Quote quoteFromJsonString = gson.fromJson(string, Quote.class );
-//            quotes.add(quoteFromJsonString);
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            Quote quoteFromJsonString = gson.fromJson(string, Quote.class );
+            quotes.add(quoteFromJsonString);
         }
 
         return quotes;
