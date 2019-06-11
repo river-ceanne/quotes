@@ -35,12 +35,11 @@ public class PotentQuotables {
         httpURLConnection.disconnect();
 
         String quoteText = result.substring(result.indexOf(":") + 1,result.indexOf(", \"quoteAuthor"));
-        System.out.println(quoteText);
+//        System.out.println(quoteText);
         String author = result.substring(result.indexOf("quoteAuthor") + 14,result.indexOf("\", \"senderName"));
-        System.out.println(author);
+//        System.out.println(author);
 
-        Gson gson = new GsonBuilder().serializeNulls().create();
-        Quote quote = gson.fromJson(result, Quote.class );
+        Quote quote = new Quote(author,quoteText);
 
 
         return quote;
