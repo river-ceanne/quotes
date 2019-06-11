@@ -27,8 +27,16 @@ public class App {
 //
 //        System.out.println(myQuotes.get((int)(Math.random() * myQuotes.size() + 1)));
 
-        System.out.println(PotentQuotables.requestQuote());
+//        System.out.println(PotentQuotables.requestQuote());
 
+
+        Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
+
+        String jsonString = getQuotesDataRevised(path);
+        Quote[] myQuotes = quotifyRevised(jsonString);
+
+
+        System.out.println(myQuotes[(int)(Math.random() * myQuotes.length + 1)]);
 
 
     }
@@ -74,4 +82,28 @@ public class App {
 
         return outputArray;
     }
+
+    public static String getQuotesDataRevised(Path path) throws IOException {
+
+        BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+        String output = "";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while((output = reader.readLine()) != null){
+            stringBuilder.append(output);
+        }
+
+        return stringBuilder.toString();
+    }
+
+
+    public static Quote[] quotifyRevised(String quoteJSONString){
+
+            Gson gson = new GsonBuilder().serializeNulls().create();
+            Quote[] quotes = gson.fromJson(quoteJSONString, Quote[].class );
+
+        return quotes;
+    }
+
+
 }
