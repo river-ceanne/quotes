@@ -27,7 +27,8 @@ public class App {
 //
 //        System.out.println(myQuotes.get((int)(Math.random() * myQuotes.size() + 1)));
 
-        PotentQuotables.requestQuote();
+        System.out.println(PotentQuotables.requestQuote());
+
 
 
     }
