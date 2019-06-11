@@ -19,24 +19,19 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
+        try{
 
-//        Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
-//
-//        ArrayList<String> jsonStrings = getQuotesData(path);
-//        ArrayList<Quote> myQuotes = quotify(jsonStrings);
-//
-//        System.out.println(myQuotes.get((int)(Math.random() * myQuotes.size() + 1)));
+            System.out.println(PotentQuotables.requestQuote());
 
-//        System.out.println(PotentQuotables.requestQuote());
+        }catch(IOException i){
+            Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
 
-
-        Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
-
-        String jsonString = getQuotesDataRevised(path);
-        Quote[] myQuotes = quotifyRevised(jsonString);
+            String jsonString = getQuotesDataRevised(path);
+            Quote[] myQuotes = quotifyRevised(jsonString);
 
 
-        System.out.println(myQuotes[(int)(Math.random() * myQuotes.length + 1)]);
+            System.out.println(myQuotes[(int)(Math.random() * myQuotes.length + 1)]);
+        }
 
 
     }

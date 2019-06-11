@@ -1,16 +1,18 @@
 package quotes;
 
 
+import com.google.common.base.Utf8;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.text.ParseException;
 
 public class PotentQuotables {
@@ -28,21 +30,48 @@ public class PotentQuotables {
         String line = "";
         while ((line = bufferedReader.readLine()) != null) {
             result += line;
-            System.out.println(result);
         }
         bufferedReader.close();
         inputStream.close();
         httpURLConnection.disconnect();
 
+
+
         String quoteText = result.substring(result.indexOf(":") + 1,result.indexOf(", \"quoteAuthor"));
-//        System.out.println(quoteText);
         String author = result.substring(result.indexOf("quoteAuthor") + 14,result.indexOf("\", \"senderName"));
-//        System.out.println(author);
 
         Quote quote = new Quote(author,quoteText);
-
+        Gson gson = new GsonBuilder().serializeNulls().create();
+        Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
+        append(path,gson.toJson(quote));
 
         return quote;
+    }
+
+    public static void append(Path path, String json) throws IOException {
+        BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+        String output = "";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while((output = reader.readLine()) != null){
+            if(output.endsWith("]")){
+                stringBuilder.append(",");
+                stringBuilder.append(json);
+                stringBuilder.append("\n");
+                stringBuilder.append("]");
+                break;
+            }else{
+                stringBuilder.append(output);
+                stringBuilder.append("\n");
+            }
+
+        }
+
+        BufferedWriter newFileUpdated = new BufferedWriter(new FileWriter(path.toFile(), false));
+        newFileUpdated.write(stringBuilder.toString());
+        newFileUpdated.close();
+
+
     }
 
 }
