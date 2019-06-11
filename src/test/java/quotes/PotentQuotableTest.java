@@ -18,7 +18,7 @@ public class PotentQuotableTest {
     public void testRequestQuoteException() throws IOException {
 
         Path path = FileSystems.getDefault().getPath("assets", "fakeFile.json");
-        ArrayList<String> x = getQuotesData(path);
+        PotentQuotables.append(path,"");
 
     }
 
