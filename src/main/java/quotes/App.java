@@ -20,12 +20,14 @@ public class App {
     public static void main(String[] args) throws IOException {
 
 
-        Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
+//        Path path = FileSystems.getDefault().getPath("assets", "recentquotes.json");
+//
+//        ArrayList<String> jsonStrings = getQuotesData(path);
+//        ArrayList<Quote> myQuotes = quotify(jsonStrings);
+//
+//        System.out.println(myQuotes.get((int)(Math.random() * myQuotes.size() + 1)));
 
-        ArrayList<String> jsonStrings = getQuotesData(path);
-        ArrayList<Quote> myQuotes = quotify(jsonStrings);
-
-        System.out.println(myQuotes.get((int)(Math.random() * myQuotes.size() + 1)));
+        PotentQuotables.requestQuote();
 
 
     }

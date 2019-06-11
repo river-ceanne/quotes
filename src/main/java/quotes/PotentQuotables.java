@@ -23,6 +23,7 @@ public class PotentQuotables {
         String line = "";
         while ((line = bufferedReader.readLine()) != null) {
             result += line;
+            System.out.println(result);
         }
         bufferedReader.close();
         inputStream.close();
